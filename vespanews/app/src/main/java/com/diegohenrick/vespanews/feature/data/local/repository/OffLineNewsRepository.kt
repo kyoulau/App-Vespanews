@@ -15,5 +15,5 @@ class OffLineNewsRepository(private val newsDao: NewsDao): NewsRepository {
 
     override suspend fun deleteNews(newsEntity: NewsEntity) = newsDao.deleteNews(newsEntity)
 
-    override fun getNews(): Flow<List<NewsEntity>>  = newsDao.getNews()
+    override suspend fun getNews(): Flow<List<NewsEntity>>  = newsDao.getNews()
 }

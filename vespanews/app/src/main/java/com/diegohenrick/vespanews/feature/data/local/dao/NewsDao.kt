@@ -35,6 +35,6 @@ interface NewsDao {
     //method for delete a news
     fun deleteNews(newsEntity: NewsEntity)
 
-    @Query("SELECT * FROM Noticia ORDER BY data_noticia DESC")
+    @Query("SELECT * FROM Noticia")
     fun getNews(): Flow<List<NewsEntity>>
 }

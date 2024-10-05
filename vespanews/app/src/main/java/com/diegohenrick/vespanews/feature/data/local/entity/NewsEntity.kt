@@ -21,6 +21,11 @@ data class NewsEntity(
     @ColumnInfo("descricao_noticia")
     val description: String,
 
-    @ColumnInfo("data_noticia")
-    val data: String
+    @NotNull
+    @ColumnInfo("url-noticia")
+    val url : String,
+
+    @NotNull
+    @ColumnInfo("imagem-noticia")
+    var image : String
 )

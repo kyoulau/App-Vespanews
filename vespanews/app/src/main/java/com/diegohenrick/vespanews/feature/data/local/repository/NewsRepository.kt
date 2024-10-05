@@ -16,5 +16,5 @@ interface NewsRepository {
 
     suspend fun deleteNews(newsEntity: NewsEntity)
 
-    fun getNews(): Flow<List<NewsEntity>>
+    suspend fun getNews(): Flow<List<NewsEntity>>
 }
