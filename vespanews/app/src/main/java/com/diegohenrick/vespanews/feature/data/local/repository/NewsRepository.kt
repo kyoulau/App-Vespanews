@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 // ornecer entidades get, insert, delete e update do banco de dados.
 interface NewsRepository {
 
-    fun getAllNews(): Flow<NewsEntity>
+    fun getAllNews(): Flow<List<NewsEntity>>
 
     suspend fun getNewsById(id:Int): NewsEntity?
 

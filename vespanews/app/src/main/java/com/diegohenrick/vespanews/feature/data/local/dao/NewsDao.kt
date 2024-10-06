@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 interface NewsDao {
 
     @Query("SELECT * FROM Noticia")
-    fun getAllNews(): Flow<NewsEntity>
+    fun getAllNews(): Flow<List<NewsEntity>>
 
     @Query("SELECT * FROM Noticia WHERE id = :id")
     fun getNewsById(id:Int): NewsEntity?

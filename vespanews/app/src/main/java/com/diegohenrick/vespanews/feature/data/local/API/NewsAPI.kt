@@ -9,6 +9,6 @@ interface NewsAPI {
     suspend fun getNews(): Flow<List<NewsEntity>>
 
     @GET("news/all HTTP/1.1")
-    suspend fun getAllNews(): List<NewsEntity>
+    suspend fun getAllNews(): Flow<List<NewsEntity>>
 
 }

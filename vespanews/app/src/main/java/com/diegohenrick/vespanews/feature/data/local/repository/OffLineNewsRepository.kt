@@ -5,7 +5,7 @@ import com.diegohenrick.vespanews.feature.data.local.entity.NewsEntity
 import kotlinx.coroutines.flow.Flow
 
 class OffLineNewsRepository(private val newsDao: NewsDao): NewsRepository {
-    override fun getAllNews(): Flow<NewsEntity> = newsDao.getAllNews()
+    override fun getAllNews(): Flow<List<NewsEntity>> = newsDao.getAllNews()
 
     override suspend fun getNewsById(id: Int): NewsEntity? = newsDao.getNewsById(id)
 
