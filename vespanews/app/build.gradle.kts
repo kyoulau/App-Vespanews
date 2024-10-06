@@ -29,14 +29,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+    dataBinding {
+        enable = true
+    }
+
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
@@ -45,6 +50,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.6.0") // Consider using consistent version
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(libs.androidx.databinding.runtime)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
@@ -53,15 +59,10 @@ dependencies {
     // Room
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
-    implementation ("com.google.dagger:dagger:2.x")
-    kapt("com.google.dagger:dagger-compiler:2.x")
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     androidTestImplementation("androidx.room:room-testing:$roomVersion")
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
