@@ -10,7 +10,7 @@ interface NewsAPI {
     @GET("news/all?language=en&api_token=zRFxefSLQYlknGaqTyLORfWH6dHWROkR0HeZVOwH")
     suspend fun getNewsAPI(): NewsList
 
-    @GET("news/all HTTP/1.1")
-    suspend fun getAllNews(): Flow<List<NewsEntity>>
+    @GET("data/quote?symbols=AAPL,TSLA,MSFT&api_token=zRFxefSLQYlknGaqTyLORfWH6dHWROkR0HeZVOwH")
+    suspend fun getStockAPI()
 
 }
