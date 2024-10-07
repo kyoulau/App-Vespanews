@@ -16,13 +16,13 @@ import kotlinx.coroutines.flow.Flow
 interface NewsDao {
 
     @Query("SELECT * FROM Noticia")
-    fun getAllNews(): Flow<List<NewsEntity>>
+    fun getAllNews(): List<NewsEntity>
 
     @Query("SELECT * FROM Noticia WHERE id = :id")
     fun getNewsById(id:Int): NewsEntity?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertNews(newsEntity: NewsEntity): Long
+    fun insertNews(newsEntity: NewsEntity)
 
     @Update
     fun updateNews(newsEntity: NewsEntity)
@@ -37,4 +37,7 @@ interface NewsDao {
 
     @Query("SELECT * FROM Noticia")
     fun getNews(): Flow<List<NewsEntity>>
+
+    @Query("DELETE FROM Noticia")
+    fun deleteAllNews()
 }

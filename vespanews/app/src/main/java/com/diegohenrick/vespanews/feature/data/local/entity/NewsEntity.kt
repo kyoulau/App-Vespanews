@@ -15,17 +15,19 @@ data class NewsEntity(
 
     @NotNull
     @ColumnInfo("titulo_noticia")
-    val tittle: String,
+    val title: String,
 
     @NotNull
     @ColumnInfo("descricao_noticia")
     val description: String,
 
-    @NotNull
-    @ColumnInfo("url-noticia")
-    val url : String,
 
     @NotNull
     @ColumnInfo("imagem-noticia")
-    var image : String
+    val image_url: String
 )
+
+data class NewsList(
+    val data: List<NewsEntity>
+)
+

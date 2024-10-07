@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.diegohenrick.vespanews.databinding.ActivityDataBinding
 import com.diegohenrick.vespanews.databinding.ActivityMainBinding
 import com.diegohenrick.vespanews.feature.data.local.API.NewsAPI
+import com.diegohenrick.vespanews.feature.data.local.adapter.NewsAdapter
+import com.diegohenrick.vespanews.feature.data.local.entity.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -35,12 +40,16 @@ class DataActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         CoroutineScope(Dispatchers.Main).launch {
-            val news = newsAPI.getNews()
-            runOnUiThread{
-                binding.title.text = news.toString()
+            Singleton.setContext(this@DataActivity)
+            if (Singleton.data.isEmpty()) {
+                var news = withContext(Dispatchers.IO) {
+                    newsAPI.getNewsAPI()
+                }
+                Singleton.updateDataFromApi(news)
             }
+            binding.newsRecyclerView.adapter = NewsAdapter()
+            binding.newsRecyclerView.layoutManager = GridLayoutManager(this@DataActivity, 2)
         }
     }
 }

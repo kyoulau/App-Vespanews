@@ -12,18 +12,38 @@ import kotlinx.coroutines.CoroutineScope
 public abstract class NewsRoomDatabase: RoomDatabase() {
     abstract fun newsDao(): NewsDao
 
-    companion object {}
-
-    @Volatile
-    private var INSTANCE: NewsRoomDatabase? = null
-
-    fun getDatabase(
-        context: Context,
-    ): NewsRoomDatabase {
-        return INSTANCE ?: synchronized(this){
-            Room.databaseBuilder(context, NewsRoomDatabase::class.java,"item_database")
-                .build()
-                .also { INSTANCE = it }
-        }
+//    companion object {
+////        const val DATABASE_NAME = "vespa_db"
+////        private var instance: NewsRoomDatabase? = null
+//    }
+//
+//    @Volatile
+//    private var INSTANCE: NewsRoomDatabase? = null
+//
+//    fun getDatabase(context: Context): NewsRoomDatabase {
+//        return INSTANCE ?: synchronized(this){
+//            Room.databaseBuilder(context, NewsRoomDatabase::class.java,"item_database")
+//                .build()
+//                //allowMainThreadQueries()
+//                .also { INSTANCE = it }
+//        }
+//    }
+    companion object {
+         const val DATABASE_NAME = "vespa_db"
+         private var instance: NewsRoomDatabase? = null
+         fun getInstance(context:Context) :NewsRoomDatabase?{
+             if(instance == null){
+                synchronized(NewsRoomDatabase::class){
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        NewsRoomDatabase::class.java,
+                        DATABASE_NAME).allowMainThreadQueries().build()
+                }
+             }
+             return instance!!
+         }
     }
+
+
+
 }
