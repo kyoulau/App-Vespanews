@@ -47,10 +47,13 @@ class DataActivity : AppCompatActivity() {
                 var news = withContext(Dispatchers.IO) {
                     newsAPI.getNewsAPI()
                 }
-                Singleton.updateDataFromApi(news)
+                for (news in news.data) {
+                    Singleton.addNews(news)
+                }
             }
             binding.newsRecyclerView.adapter = NewsAdapter()
             binding.newsRecyclerView.layoutManager = GridLayoutManager(this@DataActivity, 2)
+           // binding.newsRecyclerView.adapter?.notifyItemInserted(Singleton.data.size-1)
         }
     }
 }

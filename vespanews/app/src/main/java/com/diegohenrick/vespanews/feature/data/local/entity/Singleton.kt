@@ -15,16 +15,13 @@ object Singleton {
             }
     }
 
-    suspend fun updateDataFromApi(apiResponse: NewsList) {
-
-        for (item in apiResponse.data) {
-            dao.insertNews(item)
-        }
+    suspend fun deleteAllNews() {
+        dao.deleteAllNews()
         data = dao.getAllNews()
     }
 
-    suspend fun deleteAllNews() {
-        dao.deleteAllNews()
+    suspend fun addNews(news: NewsEntity) {
+        dao.insertNews(news)
         data = dao.getAllNews()
     }
 }
