@@ -15,7 +15,7 @@ interface StocksDAO {
     @Query("SELECT * FROM Stocks WHERE symbol = :symbol")
     fun getStocksBySymbol(symbol:String): StocksEntity?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertStocks(stocksEntity: StocksEntity)
 
     @Update

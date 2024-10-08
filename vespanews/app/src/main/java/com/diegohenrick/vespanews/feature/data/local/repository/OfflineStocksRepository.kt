@@ -2,7 +2,6 @@ package com.diegohenrick.vespanews.feature.data.local.repository
 
 import com.diegohenrick.vespanews.feature.data.local.dao.StocksDAO
 import com.diegohenrick.vespanews.feature.data.local.entity.StocksEntity
-import kotlinx.coroutines.flow.Flow
 
 class OfflineStocksRepository(private val stocksDAO: StocksDAO): StocksRepository {
 

@@ -1,6 +1,6 @@
 package com.diegohenrick.vespanews.feature.data.local.API
 import com.diegohenrick.vespanews.feature.data.local.entity.NewsList
-import com.diegohenrick.vespanews.feature.data.local.entity.StocksEntity
+import com.diegohenrick.vespanews.feature.data.local.entity.StocksList
 import retrofit2.http.GET
 
 interface NewsAPI {
@@ -9,6 +9,6 @@ interface NewsAPI {
     suspend fun getNewsAPI(): NewsList
 
     @GET("data/quote?symbols=AAPL,TSLA,MSFT&api_token=zRFxefSLQYlknGaqTyLORfWH6dHWROkR0HeZVOwH")
-    suspend fun getStocksAPI(): List<StocksEntity>
+    suspend fun getStocksAPI(): StocksList
 
 }

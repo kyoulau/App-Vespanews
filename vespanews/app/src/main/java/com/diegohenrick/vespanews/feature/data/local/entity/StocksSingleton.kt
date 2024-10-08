@@ -15,22 +15,8 @@ object StocksSingleton {
         }
     }
 
-    fun setDAO(dao: StocksDAO) {
-        this.dao = dao
-        stocksList = dao.getAllStocks()
-    }
-
-    fun getStocksBySymbol(symbol: String): StocksEntity? {
-        return dao.getStocksBySymbol(symbol)
-    }
-
     fun addStocks(stocksEntity: StocksEntity) {
         dao.insertStocks(stocksEntity)
-        stocksList = dao.getAllStocks()
-    }
-
-    fun updateStocks(stocksEntity: StocksEntity) {
-        dao.updateStocks(stocksEntity)
         stocksList = dao.getAllStocks()
     }
 

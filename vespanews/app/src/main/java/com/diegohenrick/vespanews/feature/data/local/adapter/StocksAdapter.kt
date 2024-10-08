@@ -1,5 +1,6 @@
 package com.diegohenrick.vespanews.feature.data.local.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.diegohenrick.vespanews.feature.data.local.entity.StocksSingleton
 class StocksAdapter() : RecyclerView.Adapter<StocksAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: StockViewBinding) : RecyclerView.ViewHolder(binding.root){
+        @SuppressLint("SetTextI18n")
         fun bind(stocksEntity: StocksEntity){
             binding.companyTicker.text = stocksEntity.symbol
             binding.companyName.text = stocksEntity.name

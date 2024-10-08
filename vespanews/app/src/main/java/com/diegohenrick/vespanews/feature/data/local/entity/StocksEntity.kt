@@ -13,3 +13,7 @@ data class StocksEntity(
     val price: Double,
     val dayChange: Double
 )
+
+data class StocksList(
+    val data: List<StocksEntity>
+)
