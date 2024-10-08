@@ -25,9 +25,13 @@ data class NewsEntity(
     @NotNull
     @ColumnInfo("imagem-noticia")
     val image_url: String
+
+
 )
 
 data class NewsList(
     val data: List<NewsEntity>
+
+
 )
 

@@ -3,6 +3,7 @@ package com.diegohenrick.vespanews.feature.data.local.entity
 import android.content.Context
 import com.diegohenrick.vespanews.feature.data.database.NewsRoomDatabase
 import com.diegohenrick.vespanews.feature.data.local.dao.NewsDao
+import java.sql.Time
 
 object Singleton {
     lateinit var data: List<NewsEntity>
@@ -15,7 +16,7 @@ object Singleton {
             }
     }
 
-    suspend fun deleteAllNews() {
+    fun deleteAllNews() {
         dao.deleteAllNews()
         data = dao.getAllNews()
     }

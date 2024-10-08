@@ -1,11 +1,12 @@
 package com.diegohenrick.vespanews.feature.data.local.viewModel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.diegohenrick.vespanews.feature.data.local.entity.NewsEntity
 import com.diegohenrick.vespanews.feature.data.local.entity.NewsList
 import com.diegohenrick.vespanews.feature.data.local.entity.Singleton
 
-class DataViewModel {
+class DataViewModel : ViewModel() {
     val newsList = MutableLiveData<List<NewsEntity>>()
 
     suspend fun addNews(news: NewsEntity) {
