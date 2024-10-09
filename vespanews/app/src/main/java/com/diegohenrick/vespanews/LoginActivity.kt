@@ -7,8 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.diegohenrick.vespanews.feature.data.database.UserRoomDatabase
+import com.diegohenrick.vespanews.feature.data.factory.LoginViewModelFactory
+import com.diegohenrick.vespanews.feature.data.local.viewModel.LoginViewModel
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -17,11 +20,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var goToSignUpButton: Button
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val database = UserRoomDatabase.getDatabase(this)
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(database))[LoginViewModel::class.java]
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         loginButton = findViewById(R.id.loginButton)
@@ -31,10 +37,20 @@ class LoginActivity : AppCompatActivity() {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
+
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                loginUser(email, password)
-            } else {
-                Toast.makeText(this, "Por favor insira o email e a senha", Toast.LENGTH_SHORT).show()
+                loginViewModel.loginUser(email, password) { success, user ->
+                    if (success) {
+                        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
+                    }
+                }            } else {
+                Toast.makeText(this, "Please insert your email and password", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -44,22 +60,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginUser(email: String, password: String) {
-        lifecycleScope.launch {
-            val userDao = UserRoomDatabase.getDatabase(this@LoginActivity).userDao()
-            val user = userDao.getUserByEmail(email)
-
-            if (user != null && user.password == password) {
-                Toast.makeText(this@LoginActivity, "Login efetuado com sucesso!", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this@LoginActivity, "Email ou senha inválidos", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 }
 
 
