@@ -8,7 +8,7 @@ plugins {
 }
 //val secretsPropertiesFile = rootProject.file("local.properties")
 //val secretsProperties =  Properties()
-//secretsProperties.load(FileInputStream(secretsPropertiesFile))
+//secretsProperties.load(FileInputStream(secretsPropertiesFile))eu
 
 android {
     namespace = "com.diegohenrick.vespanews"

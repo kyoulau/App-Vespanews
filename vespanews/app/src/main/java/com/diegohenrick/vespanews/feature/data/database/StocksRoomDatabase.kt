@@ -24,7 +24,7 @@ abstract class StocksRoomDatabase: RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         StocksRoomDatabase::class.java,
-                        DATABASE_NAME).allowMainThreadQueries().fallbackToDestructiveMigration().build()
+                        DATABASE_NAME).allowMainThreadQueries().build()
                 }
             }
             return instance!!
