@@ -3,7 +3,7 @@ package com.diegohenrick.vespanews.feature.data.local.repository
 import com.diegohenrick.vespanews.feature.data.local.entity.NewsEntity
 import kotlinx.coroutines.flow.Flow
 
-// ornecer entidades get, insert, delete e update do banco de dados.
+// Fornecer entidades get, insert, delete e update do banco de dados.
 interface NewsRepository {
 
     fun getAllNews(): List<NewsEntity>
