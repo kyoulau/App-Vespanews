@@ -4,73 +4,70 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.diegohenrick.vespanews.feature.data.database.UserRoomDatabase
 import com.diegohenrick.vespanews.feature.data.local.dao.UserDao
 import com.diegohenrick.vespanews.feature.data.local.entity.User
+import com.diegohenrick.vespanews.feature.data.local.viewModel.RegisterViewModel
+import com.diegohenrick.vespanews.feature.data.factory.RegisterViewModelFactory
+
 import kotlinx.coroutines.launch
 
 class RegisterActivity :AppCompatActivity() {
 
     private lateinit var userDao: UserDao
     private lateinit var db: UserRoomDatabase
+    private lateinit var usernameEditText: EditText
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var confirmPasswordEditText: EditText
+
+    private val registerViewModel: RegisterViewModel by viewModels {
+        RegisterViewModelFactory(UserRoomDatabase.getDatabase(this).userDao())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        usernameEditText = findViewById<EditText>(R.id.usernameEditText)
+        emailEditText = findViewById<EditText>(R.id.emailEditText)
+        passwordEditText = findViewById<EditText>(R.id.passwordEditText)
+        confirmPasswordEditText = findViewById<EditText>(R.id.confirmPasswordEditText)
 
         db = UserRoomDatabase.getDatabase(this)
         userDao = db.userDao()
 
         val registerButton = findViewById<Button>(R.id.registerButton)
         registerButton.setOnClickListener {
-            registerUser()
-        }
+            val username = usernameEditText.text.toString().trim()
+            val email = emailEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
+            val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
-    }
 
-    private fun registerUser() {
-        val username = findViewById<EditText>(R.id.usernameEditText).text.toString()
-        val email = findViewById<EditText>(R.id.emailEditText).text.toString()
-        val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
-        val confirmPassword = findViewById<EditText>(R.id.confirmPasswordEditText).text.toString()
-        if (username.isNotEmpty() && email.isNotEmpty()) {
-
-            if (password == confirmPassword) {
-                lifecycleScope.launch {
-                    val existingUser = userDao.getUserByEmail(email)
-
-                    if (existingUser == null) {
-                        val newUser = User(username = username, email = email, password = password)
-                        userDao.insertUser(newUser)
-                        Toast.makeText(
-                            this@RegisterActivity,
-                            "Usuário registrado com sucesso!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                        startActivity(intent)
-
-                        finish()
-
-                    } else {
-                        Toast.makeText(
-                            this@RegisterActivity,
-                            "Email já registrado!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+            registerViewModel.registerUser(
+                username = username,
+                email = email,
+                password = password,
+                confirmPassword = confirmPassword,
+                onSuccess = {
+                    Toast.makeText(this, "User registered successfully!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                },
+                onError = { errorMessage ->
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                 }
+            )        }
 
-            } else {
-                Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            Toast.makeText(this, "Por favor insira o email e a senha", Toast.LENGTH_SHORT).show()
-        }
     }
+
+
 
 }
