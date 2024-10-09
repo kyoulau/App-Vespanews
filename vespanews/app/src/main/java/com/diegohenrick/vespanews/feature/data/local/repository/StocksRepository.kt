@@ -7,8 +7,6 @@ interface StocksRepository {
 
     fun getAllStocks(): List<StocksEntity>
 
-    suspend fun getStocksBySymbol(symbol: String): StocksEntity?
-
     suspend fun insertStocks(stocksEntity: StocksEntity)
 
     suspend fun updateStocks(stocksEntity: StocksEntity)

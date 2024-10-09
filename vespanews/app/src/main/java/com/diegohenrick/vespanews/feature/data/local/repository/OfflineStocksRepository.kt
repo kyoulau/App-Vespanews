@@ -7,8 +7,6 @@ class OfflineStocksRepository(private val stocksDAO: StocksDAO): StocksRepositor
 
     override fun getAllStocks(): List<StocksEntity> = stocksDAO.getAllStocks()
 
-    override suspend fun getStocksBySymbol(symbol: String): StocksEntity? = stocksDAO.getStocksBySymbol(symbol)
-
     override suspend fun insertStocks(stocksEntity: StocksEntity) = stocksDAO.insertStocks(stocksEntity)
 
     override suspend fun updateStocks(stocksEntity: StocksEntity) = stocksDAO.updateStocks(stocksEntity)
